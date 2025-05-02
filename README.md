@@ -1,2 +1,2 @@
 # Project 8: L'Oréal Chatbot
-L’Oréal wants to explore what's possible with AI. First, they've asked you to build a chatbot that answers only questions related to L’Oréal products and routines.
+L’Oréal is exploring the power of AI, and your job is to showcase what's possible. Your task is to build a chatbot that helps users discover and understand L’Oréal’s extensive range of products—makeup, skincare, haircare, and fragrances—as well as provide personalized routines and recommendations.
