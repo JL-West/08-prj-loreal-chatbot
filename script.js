@@ -9,9 +9,7 @@ chatWindow.textContent = "👋 Hello! How can I help you today?";
 /* Handle form submit */
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const userMessage = userInput.value.trim();
 
   // Show message
-  chatWindow.innerHTML = "<strong>You asked:</strong> " + userMessage;
-  userInput.value = "";
+  chatWindow.innerHTML = "Connect to the OpenAI API for a response!";
 });
