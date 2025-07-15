@@ -2,6 +2,8 @@ Students are beginners learning the basics of JavaScript, APIs and OpenAI.
 
 We use OpenAI's `gpt-4o` model, unless asked to use a different model.
 
+We use a `messages` parameter instead of `prompt` for the OpenAI API, and check for `data.choices[0].message.content`.
+
 We provide comments to help students understand each part of the generated code.
 
 We do NOT use npm libraries or Node SDKs to make requests to APIs.
