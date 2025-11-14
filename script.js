@@ -16,3 +16,5 @@ chatForm.addEventListener("submit", (e) => {
   // Show message
   chatWindow.innerHTML = "Connect to the OpenAI API for a response!";
 });
+//REPLACE with your actual Cloudflare Worker URL
+const CLOUDFLARE_WORKER_URL = "https://loreal-chatbot-worker.jaammiiee99.workers.dev/";
