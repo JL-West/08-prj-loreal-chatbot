@@ -6,6 +6,84 @@ const chatWindow = document.getElementById("chatWindow");
 // Configure your Cloudflare Worker URL here (replace with your worker URL)
 const WORKER_URL = "https://loreal-chatbot-worker.jaammiiee99.workers.dev/";
 
+// Resolve the effective worker URL. Priority:
+// 1. `<meta name="worker-url" content="...">` in `index.html`
+// 2. `localStorage.worker_url` (persisted on the client)
+// 3. the `WORKER_URL` constant above (if not the placeholder)
+function getEffectiveWorkerUrl() {
+  try {
+    const meta = document
+      .querySelector('meta[name="worker-url"]')
+      ?.content?.trim();
+    if (meta) {
+      localStorage.setItem("worker_url", meta);
+      return meta;
+    }
+
+    const stored = localStorage.getItem("worker_url");
+    if (stored) return stored;
+
+    if (WORKER_URL && !WORKER_URL.includes("YOUR_WORKER_SUBDOMAIN")) {
+      localStorage.setItem("worker_url", WORKER_URL);
+      return WORKER_URL;
+    }
+
+    return null;
+  } catch (e) {
+    console.warn("Error resolving worker URL:", e);
+    return null;
+  }
+}
+
+/* Settings UI: allow editing worker URL from the page */
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsPanel = document.getElementById("settingsPanel");
+const workerUrlInput = document.getElementById("workerUrlInput");
+const saveWorkerUrlBtn = document.getElementById("saveWorkerUrl");
+const closeSettingsBtn = document.getElementById("closeSettings");
+
+function openSettings() {
+  const url = getEffectiveWorkerUrl() || "";
+  workerUrlInput.value = url;
+  settingsPanel.setAttribute("aria-hidden", "false");
+  settingsPanel.classList.add("show");
+}
+
+function closeSettings() {
+  settingsPanel.setAttribute("aria-hidden", "true");
+  settingsPanel.classList.remove("show");
+}
+
+if (settingsBtn) {
+  settingsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const isHidden = settingsPanel.getAttribute("aria-hidden") === "true";
+    if (isHidden) openSettings();
+    else closeSettings();
+  });
+}
+
+if (saveWorkerUrlBtn) {
+  saveWorkerUrlBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const value = workerUrlInput.value.trim();
+    if (value) {
+      localStorage.setItem("worker_url", value);
+      // Provide quick feedback
+      saveWorkerUrlBtn.textContent = "Saved";
+      setTimeout(() => (saveWorkerUrlBtn.textContent = "Save"), 1200);
+      closeSettings();
+    }
+  });
+}
+
+if (closeSettingsBtn) {
+  closeSettingsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeSettings();
+  });
+}
+
 // Conversation memory (sent to the worker as `messages`)
 const messages = [
   {
@@ -67,15 +145,15 @@ function appendLoading() {
 
 /* Send a POST request to the Cloudflare Worker */
 async function sendMessageToWorker(messagesPayload) {
-  // Basic validation to catch placeholder WORKER_URL
-  if (!WORKER_URL || WORKER_URL.includes("YOUR_WORKER_SUBDOMAIN")) {
+  const effectiveUrl = getEffectiveWorkerUrl();
+  if (!effectiveUrl) {
     throw new Error(
-      "WORKER_URL is not configured. Replace WORKER_URL in script.js with your deployed Cloudflare Worker URL."
+      'WORKER_URL is not configured. Add a <meta name="worker-url" content="https://..."> to index.html or set WORKER_URL in script.js.'
     );
   }
 
   try {
-    const res = await fetch(WORKER_URL, {
+    const res = await fetch(effectiveUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: messagesPayload }),

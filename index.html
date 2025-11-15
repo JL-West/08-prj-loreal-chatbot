@@ -13,6 +13,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <!-- Optional: worker URL meta so the client can read/persist it -->
+    <meta
+      name="worker-url"
+      content="https://loreal-chatbot-worker.jaammiiee99.workers.dev/"
+    />
   </head>
 
   <body>
@@ -28,6 +33,28 @@
           <div class="brand-text">
             <h1 class="site-title">L'Oréal Product Advisor</h1>
             <p class="tagline">Expert help for beauty & haircare</p>
+          </div>
+        </div>
+
+        <!-- Settings: edit worker URL without touching JS -->
+        <div class="settings">
+          <button id="settingsBtn" aria-label="Settings" title="Settings">
+            ⚙️
+          </button>
+          <div id="settingsPanel" class="settings-panel" aria-hidden="true">
+            <label for="workerUrlInput">Cloudflare Worker URL</label>
+            <input
+              id="workerUrlInput"
+              type="text"
+              placeholder="https://your-worker.workers.dev/"
+            />
+            <div class="settings-actions">
+              <button id="saveWorkerUrl">Save</button>
+              <button id="closeSettings" class="secondary">Close</button>
+            </div>
+            <p class="settings-hint">
+              Saved locally in your browser (localStorage).
+            </p>
           </div>
         </div>
       </header>
