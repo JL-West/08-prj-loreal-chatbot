@@ -25,7 +25,36 @@ appendMessage(
 function appendMessage(role, text, className = "") {
   const el = document.createElement("div");
   el.className = `msg ${role} ${className}`.trim();
-  el.textContent = text;
+
+  // avatar
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = role === "user" ? "🙂" : "💄";
+
+  // bubble with text and meta (timestamp)
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  const bubbleText = document.createElement("div");
+  bubbleText.className = "bubble-text";
+  bubbleText.textContent = text;
+
+  const meta = document.createElement("div");
+  meta.className = "meta";
+  const ts = document.createElement("span");
+  ts.className = "timestamp";
+  ts.textContent = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  meta.appendChild(ts);
+
+  bubble.appendChild(bubbleText);
+  bubble.appendChild(meta);
+
+  el.appendChild(avatar);
+  el.appendChild(bubble);
+
   chatWindow.appendChild(el);
   chatWindow.scrollTop = chatWindow.scrollHeight;
   return el;
@@ -38,18 +67,35 @@ function appendLoading() {
 
 /* Send a POST request to the Cloudflare Worker */
 async function sendMessageToWorker(messagesPayload) {
-  const res = await fetch(WORKER_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages: messagesPayload }),
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Worker request failed: ${res.status} ${text}`);
+  // Basic validation to catch placeholder WORKER_URL
+  if (!WORKER_URL || WORKER_URL.includes("YOUR_WORKER_SUBDOMAIN")) {
+    throw new Error(
+      "WORKER_URL is not configured. Replace WORKER_URL in script.js with your deployed Cloudflare Worker URL."
+    );
   }
 
-  return res.json();
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: messagesPayload }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Worker request failed: ${res.status} ${text}`);
+    }
+
+    return res.json();
+  } catch (err) {
+    // Re-throw with an informative message for common causes
+    if (err instanceof TypeError && err.message === "Failed to fetch") {
+      throw new Error(
+        "Failed to fetch the Worker. Possible causes: worker not deployed, wrong WORKER_URL, CORS blocked, or you're viewing the page via file://. Run a local server and ensure the worker URL is reachable."
+      );
+    }
+    throw err;
+  }
 }
 
 /* Handle form submit: capture input, display, send to worker, display reply */
