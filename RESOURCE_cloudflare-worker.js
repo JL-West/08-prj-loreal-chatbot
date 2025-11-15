@@ -18,12 +18,12 @@ export default {
     if (!apiKey) {
       return new Response(
         JSON.stringify({
-          error: "Missing OPENAI_API_KEY in worker environment",
+          error: "https://loreal-chatbot-worker.jaammiiee99.workers.dev/",
         }),
         { status: 500, headers: corsHeaders }
       );
     }
-    const apiUrl = "https://loreal-chatbot-worker.jaammiiee99.workers.dev/";
+    const apiUrl = "";
     const userInput = await request.json();
 
     const requestBody = {
