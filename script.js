@@ -118,11 +118,30 @@ chatForm.addEventListener("submit", async (e) => {
   try {
     const data = await sendMessageToWorker(messages);
 
-    // OpenAI chat completion response: data.choices[0].message.content
-    const assistantText =
-      data?.choices?.[0]?.message?.content ||
-      data?.choices?.[0]?.text ||
-      "(no response)";
+    // Log raw response for debugging
+    console.log("Worker response:", data);
+
+    // If worker returned an error object, show it to the user
+    let assistantText = null;
+    if (data?.error) {
+      // OpenAI or worker-side error
+      const errMsg =
+        data.error?.message || data.error || JSON.stringify(data.error);
+      assistantText = `Error from worker: ${errMsg}`;
+    } else if (Array.isArray(data?.choices) && data.choices.length > 0) {
+      // Typical chat completion
+      assistantText =
+        data.choices[0]?.message?.content || data.choices[0]?.text || null;
+    } else if (data && typeof data === "object") {
+      // Unexpected but non-error response — show a truncated debug output
+      assistantText = `Unexpected response structure: ${JSON.stringify(
+        data
+      ).slice(0, 500)}`;
+    }
+
+    if (!assistantText) {
+      assistantText = "(no response)";
+    }
 
     // remove loading and show assistant response
     loadingEl.remove();
