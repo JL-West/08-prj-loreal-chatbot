@@ -4,7 +4,7 @@ const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
 // Configure your Cloudflare Worker URL here (replace with your worker URL)
-const WORKER_URL = "https://YOUR_WORKER_SUBDOMAIN.workers.dev/";
+const WORKER_URL = "https://loreal-chatbot-worker.jaammiiee99.workers.dev/";
 
 // Conversation memory (sent to the worker as `messages`)
 const messages = [
