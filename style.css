@@ -21,13 +21,40 @@ body {
 /* header */
 .site-header {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 28px;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* branding */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+}
+
+.brand-logo {
+  max-height: 64px;
+  width: auto;
+  display: block;
+}
+
+.brand-text {
+  text-align: left;
+}
+
+.tagline {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #b0863a; /* warm gold accent */
+  font-style: italic;
 }
 
 /* chat window */
