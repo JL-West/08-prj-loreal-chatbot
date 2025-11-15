@@ -73,18 +73,42 @@ body {
   white-space: pre-line;
 }
 
-/* messages */
+/* messages: layout + bubble styles */
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .msg {
-  margin-bottom: 14px;
-  line-height: 1.5;
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  margin-bottom: 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
 .msg.user {
-  color: #ff003b;
+  align-self: flex-end;
+  background: #000; /* L'Oréal black for user bubble */
+  color: #fff;
+  text-align: right;
+  border-bottom-right-radius: 6px;
 }
 
 .msg.ai {
-  color: #666666;
+  align-self: flex-start;
+  background: #fff;
+  color: #222;
+  border: 1px solid #eee;
+  border-bottom-left-radius: 6px;
+}
+
+.msg.loading {
+  opacity: 0.7;
+  font-style: italic;
 }
 
 /* input row */
