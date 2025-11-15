@@ -220,6 +220,12 @@ body {
   font-style: italic;
 }
 
+/* Bubble typography: smaller text for compact messages (no forced max-width) */
+.msg .bubble {
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
 /* input row */
 .chat-form {
   display: flex;
@@ -300,4 +306,30 @@ body {
 
 .site-footer a:hover {
   color: #666666;
+}
+
+/* Branded footer link/button style — matches site branding */
+.site-footer .footer-link {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #111;
+  background: transparent;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.site-footer .footer-link:hover,
+.site-footer .footer-link:focus {
+  background: rgba(227, 165, 83, 0.08); /* subtle warm gold hover */
+  border-color: #e3a535;
+  color: #000;
+  text-decoration: none;
+}
+
+.site-footer .footer-link:focus {
+  outline: 2px solid rgba(227, 165, 83, 0.16);
+  outline-offset: 2px;
 }
