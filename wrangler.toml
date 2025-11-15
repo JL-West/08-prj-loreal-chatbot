@@ -1,0 +1,12 @@
+name = "loreal-chatbot-worker"
+main = "RESOURCE_cloudflare-worker.js"
+compatibility_date = "2025-11-15"
+workers_dev = true
+# Optional: set your account_id if you want to publish to a specific Cloudflare account
+# account_id = "https://loreal-chatbot-worker.jaammiiee99.workers.dev/"
+# If you use routes instead of workers_dev, configure them below:
+# [[routes]]
+# pattern = "example.com/*"
+# zone_id = "your-zone-id"
+
+type = "javascript"
