@@ -14,11 +14,11 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    const apiKey = env.OPENAI_API_KEY; //
+    const apiKey = env.OPENAI_API_KEY; //https://loreal-chatbot-worker.jaammiiee99.workers.dev/
     if (!apiKey) {
       return new Response(
         JSON.stringify({
-          error: "https://loreal-chatbot-worker.jaammiiee99.workers.dev/",
+          error: "",
         }),
         { status: 500, headers: corsHeaders }
       );
