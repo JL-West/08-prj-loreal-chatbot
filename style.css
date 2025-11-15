@@ -142,23 +142,24 @@ body {
   gap: 12px;
 }
 
-.msg {
-  display: flex;
-  gap: 12px;
-  align-items: flex-end;
-  max-width: 100%;
+.msg.user {
+  justify-content: flex-end;
+  /* keep avatar then bubble, but anchor the whole row to the right */
 }
 
-.msg .bubble {
-  max-width: 78%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  line-height: 1.4;
-  word-wrap: break-word;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+.msg.user .bubble {
+  background: #ff003b; /* user bubble color */
+  color: #ffffff;
+  text-align: left; /* text inside bubble left-aligned so emoji sits to its left */
+  border-bottom-right-radius: 6px;
 }
 
-.msg .meta {
+.msg.user .avatar {
+  background: #ffffff;
+  color: #ff003b;
+  border: 2px solid rgba(255, 0, 59, 0.08);
+  margin-right: 8px; /* space between avatar and bubble */
+}
   margin-top: 6px;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
