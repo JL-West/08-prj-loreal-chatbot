@@ -69,8 +69,7 @@
       </footer>
     </div>
 
-    <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
-    <script src="secrets.js"></script>
+    <!-- API requests should go through the Cloudflare Worker; client-side secrets.js is not required -->
     <script src="script.js"></script>
   </body>
 </html>

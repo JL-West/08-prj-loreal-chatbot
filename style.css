@@ -53,7 +53,7 @@ body {
 .tagline {
   margin: 4px 0 0;
   font-size: 13px;
-  color: #b0863a; /* warm gold accent */
+  color: #e3a535; /* warm gold accent */
   font-style: italic;
 }
 
@@ -64,7 +64,7 @@ body {
 
 .chat-window {
   height: 360px;
-  border: 1px solid #000;
+  border: 1px solid #e3a535;
   padding: 20px;
   font-size: 18px;
   line-height: 1.5;
@@ -80,7 +80,7 @@ body {
 }
 
 .msg.user {
-  color: #000;
+  color: #ff003b;
 }
 
 .msg.ai {
